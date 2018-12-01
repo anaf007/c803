@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>后台管理</title>
+    {%include 'admin/csbase.html'%}
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="ibox">
+            <div class="ibox-content">
+                <form id="search" method="get" class="form-inline">
+                    <div class="row m-t">
+                        <div class="col-sm-12">
+                            <div class="btn-group pull-right">
+                                <button type="submit" class="btn btn-white" title="搜索">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                                <button type="button" class="btn btn-white" title="刷新" onclick="window.location.reload();">
+                                    <i class="fa fa-repeat"></i>
+                                </button>
+                            </div>
+                            <div class="pull-right">
+                                <input type="text" name="username" id="username" value="{$_GET['username']}" class="form-control" placeholder="会员帐号" />
+                                <select name="status" class="form-control">
+                                    <option value="">请选择状态</option>
+                                    <option value="0" <if condition="$_GET['status'] eq '0'">selected</if>>运行中</option>
+                                    <option value="1" <if condition="$_GET['status'] eq '1'">selected</if>>已到期</option>
+                                </select>
+                                <input type="text" name="addtime" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" value="{$addtime}"   class="form-control" placeholder="时间" readonly />
+                                &nbsp;
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="table-responsive m-t-sm">
+                    <table class="{$Think.config.TABLE_CLASS}">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>会员帐号</th>
+                                <!-- <th>编号</th> -->
+                                <th>矿机</th>
+                                <th>周期</th>
+                                <th>产量</th>
+                                <th>已产量</th>
+                                <th>时间</th>
+                                <th>状态</th>
+                                <th>来源</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <empty name="list">
+                            <tr>
+                                <td colspan="9" style="text-align:center">暂无数据！</td>
+                            </tr>
+                            <else />
+                            <volist name="list" id="vo">
+                            <tr>
+                                <td>{$vo.id}</td>
+                                <td>{$vo.uid|getuser="username"}</td>
+                                <!-- <td>{$vo['code']}</td> -->
+                                <td>{$vo.minertype|get_miner_name}</td>
+                                <td>{$vo.minerlife}</td>
+                                <td>{$vo.minerout}</td>
+                                <td>{$vo.totalout}</td>
+                                <td>{$vo.buytime|date="Y/m/d H:i:s",###}</td>
+                                <td><if condition="$vo['status'] eq 1">
+                                    已到期
+                                <else />
+                                    运行中
+                                </if></td>
+                                <td><if condition="$vo['source'] eq 'give'">
+                                    赠送
+                                <else />
+                                    购买
+                                </if></td>
+                            </tr>
+                            </volist>
+                            </empty>
+                        </tbody>
+                    </table>
+                    <div id="page"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+   {%include 'admin/jsbase.html'%}
+    <script type="text/javascript">
+    $(document).ready(function() {
+        $("#page").pager({
+            pagenumber: {$p},
+            pagecount: {$pagesize},
+            buttonClickCallback: PageClick
+        });
+    });
+
+    PageClick = function(p) {
+        sc.pageurl('','p',p);
+    }
+    </script>
+</body>
+</html>

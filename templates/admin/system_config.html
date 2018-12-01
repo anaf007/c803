@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>后台管理</title>
+    {%include 'admin/csbase.html'%}
+    <style>
+    .w1{ width:80px; display: inline-block;}
+    .w3{ width:160px; display: inline-block;}
+    .w2{ width:300px; display: inline-block;}
+    </style>
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="ibox">
+            <div class="ibox-content">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <div class="col-sm-6">
+                            <input type="button" value="保存修改" class="btn btn-primary" onclick="check();" />
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
+                        <label class="col-sm-12">基础设置</label>
+                        <div class="col-sm-6">
+                            <div class="input-group">
+                                <span class="input-group-addon">系统名称</span>
+                                <input type="text" id="sitename" value="{{sc['name']}}" class="form-control" />
+                                <span class="input-group-addon">系统页面显示</span>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="input-group">
+                                <span class="input-group-addon">系统标题</span>
+                                <input type="text" id="sitetitle" value="{{sc['title']}}" class="form-control" />
+                                <span class="input-group-addon">浏览器标签显示</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <div class="input-group">
+                                <span class="input-group-addon">系统开关</span>
+                                <select name="systemswitch" id="systemswitch" class="form-control">
+                                    <option value="0" {%if sc["enable"]%} selected {%endif%} >开启</option>
+                                    <option value="1" {%if not sc["enable"]%} selected {%endif%} >关闭</option>
+                                </select>
+                                <span class="input-group-addon">关闭提示</span>
+                                <input type="text" id="note" value="{{sc['enable_msg']}}" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <div class="input-group">
+                                <span class="input-group-addon">注册银行</span>
+                                <input type="text" id="bankname" value="{{sc['blank_name']}}" class="form-control" />
+                                <span class="input-group-addon text-danger">多个请用“|”隔开</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
+                        <label class="col-sm-12">提现设置</label>
+                        <div class="col-sm-6 m-b">
+                            <div class="input-group">
+                                <span class="input-group-addon">最低金额</span>
+                                <input type="text" id="minwith" value="{{sc['minwith']}}" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-sm-6 m-b">
+                            <div class="input-group">
+                                <span class="input-group-addon">提现倍数</span>
+                                <input type="text" id="withwas" value="{{sc['withwas']}}" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-sm-6 m-b">
+                            <div class="input-group">
+                                <span class="input-group-addon">提现扣税</span>
+                                <input type="text" id="withtax" value="{{sc['withtax']}}" class="form-control" />
+                                <span class="input-group-addon">%</span>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="hr-line-dashed hide"></div>
+                    <div class="form-group hide">
+                        <label class="col-sm-12">充值设置</label>
+                        <div class="col-sm-6 m-b">
+                            <div class="input-group">
+                                <span class="input-group-addon">最低金额</span>
+                                <input type="text" id="minrechge" value="{$info.minrechge}" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-sm-6 m-b">
+                            <div class="input-group">
+                                <span class="input-group-addon">充值倍数</span>
+                                <input type="text" id="rechgewas" value="{$info.rechgewas}" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-sm-12 m-b">
+                            <div class="input-group">
+                            <volist name="list" id="vo">
+                                <label class="checkbox-inline i-checks">                                                
+                                    <input type="checkbox" name="rechgetype[]" value="{$key}" <?php if(strstr($info['rechgetype'],$key)){ ?>checked<?php } ?>>{$vo['name']}
+                                </label>
+                            </volist>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed hide"></div>
+                    <div class="form-group hide">
+                        <label class="col-sm-12">货币转换</label>
+                        <div class="col-sm-12 m-b">
+                            <div class="input-group">
+                            <volist name="zhlist" id="zo">
+                                <label class="checkbox-inline i-checks">    
+                                    <input type="checkbox" name="exchangetype[]" value="{$key}" <?php if(strstr($info['exchangetype'],$key)){ ?>checked<?php } ?>>{$zo['name']}
+                                </label>
+                            </volist>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed hide"></div>
+                    <div class="form-group hide">
+                        <label class="col-sm-12">购物货币类型</label>
+                        <div class="col-sm-12">
+                            <div class="input-group">
+                                <volist name="list" id="vo">
+                                    <label class="checkbox-inline i-checks">        
+                                        <input type="checkbox" name="shopcash[]" value="{$key}" <?php if(strstr($info['shopcash'],$key)){ ?>checked<?php } ?>>{$vo['name']}
+                                    </label>
+                                </volist>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
+                        <label class="col-sm-12">转账类型</label>
+                        <!-- <div class="col-sm-12">
+                            <div class="input-group">
+                                <volist name="list" id="vo">
+                                    <label class="checkbox-inline i-checks">    
+                                        <input type="checkbox" name="transcash[]" value="{$key}" <?php if(strstr($info['transcash'],$key)){ ?>checked<?php } ?>>{$vo['name']}
+                                    </label>
+                                </volist>
+                            </div>
+                        </div> -->
+                        <div class="col-sm-6 m-t">
+                            <div class="input-group">
+                                <span class="input-group-addon">最低转账</span>
+                                <input type="text" id="mintransfer" value="{{sc['mintransfer']}}" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
+                        <div class="col-sm-6">
+                            <input type="button" value="保存修改" class="btn btn-primary" onclick="check();" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    {%include 'admin/jsbase.html'%}
+    <script src="/static/res/js/icheck.min.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function(){
+        $(".i-checks").iCheck({checkboxClass:"icheckbox_square-green",radioClass:"iradio_square-green",});
+    });
+    check=function(){
+        var withtype = [];
+        var withweek = [];
+        var rechgetype = [];
+        var exchangetype = [];
+        var shopcash = [];
+        var transcash = [];
+
+        $("input[name='withtype[]']:checked").each(function(){
+            withtype.push($(this).attr('value'));
+        });
+        $("input[name='withweek[]']:checked").each(function(){
+            withweek.push($(this).attr('value'));
+        });
+        $("input[name='rechgetype[]']:checked").each(function(){
+            rechgetype.push($(this).attr('value'));
+        });
+        $("input[name='exchangetype[]']:checked").each(function(){
+            exchangetype.push($(this).attr('value'));
+        });
+        $("input[name='shopcash[]']:checked").each(function(){
+            shopcash.push($(this).attr('value'));
+        });
+        $("input[name='transcash[]']:checked").each(function(){
+            transcash.push($(this).attr('value'));
+        });
+
+        var d = {
+            "sitename":$("#sitename").val(),
+            "sitetitle":$("#sitetitle").val(),
+            "bankname":$("#bankname").val(),
+            "systemswitch":$("#systemswitch").val(),
+            "note":$("#note").val(),
+            "autodeluser": $("#autodeluser").val(),
+
+            //提现参数
+            "minwith": $("#minwith").val(),
+            "withwas": $("#withwas").val(),
+            "withtax": $("#withtax").val(),
+            "withtype": withtype,
+            "withweek": withweek,
+
+            //充值参数
+            "minrechge": $("#minrechge").val(),
+            "rechgewas": $("#rechgewas").val(),
+            "rechgetype": rechgetype,
+
+            //转换参数
+            "exchangetype": exchangetype,
+
+            //购物
+            "shopcash": shopcash,
+
+            //转账
+            "transcash": transcash,
+            "mintransfer": $("#mintransfer").val(),
+        };
+        if(d.systemswitch == 1 && d.note == ''){
+            layer.alert('关闭系统备注不能为空');
+            return false;
+        }
+        sc.ajaxreturn('',d);
+    }
+    </script>
+</body>
+</html>

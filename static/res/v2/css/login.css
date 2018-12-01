@@ -1,0 +1,51 @@
+@charset "utf-8";
+/* CSS Document */
+
+* { margin: 0; padding: 0; list-style: none; text-decoration: none; outline: none; font-weight: normal; font-family: "微软雅黑", "Helvetica Neue", Helvetica, Arial, sans-serif; box-sizing: border-box; }
+img { vertical-align: middle; border: none; }
+/*body { background: #fff url(../images/login_bj.jpg) no-repeat fixed center top; background-size: 100% 100%; }*/
+.login-bg { background: url(../Images/login_bj.jpg) no-repeat; overflow-x: hidden; }
+body, html { min-height: 100%; }
+.bigbox { width: 480px; position: absolute; left: 50%; margin-left: -250px; top: 45%; margin-top: -240px; }
+.logo { text-align: center; margin-bottom: 20px; }
+.logo img { width:80%; }
+.login { padding-bottom: 14px; margin-top: 0; border-radius: 10px; }
+.login_title { text-align: center; line-height: 60px; padding: 20px 0; font-size: 24px; font-weight: bold; color: #fff; }
+.login ul { overflow: hidden; margin: 0 auto; }
+.login li { }
+.line { margin: 20px 0; height: 46px; line-height: 46px; background: #fff; border: 0; border-radius: 10px; }
+.line i { display: inline-block; width: 52px; height: 30px; line-height: 30px; border-right: 1px solid #ccc; }
+.line img { padding: 0 15px; }
+.line select { padding-left: 8px; height: 46px; width: 80%; color: #999999; border: 0; appearance: none; -moz-appearance: none; -webkit-appearance: none; -ms-appearance: none; background: url(../images/2.png) no-repeat scroll right center transparent; padding-right: 14px; }
+.line input { padding-left: 10px; width: 80%; height: 30px; border: 0; color: #999999; }
+.text-up { text-transform: uppercase; }
+.yzm { position: relative; }
+.yzm-z { position: absolute; right: 0; top: 0; }
+.code { width: 100px; height: 42px; border-radius: 10px; }
+.sx { cursor: pointer; }
+.forget { color: #fff; font-size: 14px; }
+.forget:hover { color: #ec971f; }
+.button { border-radius: 10px; margin-top: 10px; width: 100%; height: 50px; line-height: 50px; background: #F15F79;    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+ cursor: pointer; font-size: 20px; border: none; color: #fff; margin-bottom: 10px; }
+.button:focus { color: #fff;     background: linear-gradient(60deg, #B24592, #F15F79); border-color: #985f0d }
+.button:hover { color: #fff;     background: linear-gradient(60deg, #B24592, #F15F79); border-color: #d58512 }
+
+::-webkit-input-placeholder {
+color:#999;
+}
+::-moz-placeholder {
+color:#999;
+}
+:-moz-placeholder {
+color:#999;
+}
+@media screen and (min-width: 1200px) {
+.yzm .line { width: 63% !important; }
+}
+@media screen and (max-width: 768px) {
+body { background: #fff url(../images/bg.jpg) no-repeat fixed center top; background-size: 100% 100%; }
+.bigbox { width: 92%; position: relative; top: 0; left: 0; overflow: hidden; margin: 0 auto; margin-top: 10%; }
+.logo { margin-bottom: 10px; }
+
+.line select { width: 76%; }
+}

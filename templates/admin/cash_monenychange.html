@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>后台管理</title>
+    {%include 'admin/csbase.html'%}
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="ibox">
+            <div class="ibox-content">
+                <form id="form1" class="form-horizontal" autocomplete="off">
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <div class="input-group">
+                                <span class="input-group-addon">货币类型</span>
+                                <select name="btype" id="btype" class="form-control">
+                                <volist name="list" id="vo">
+                                    <option value="{$key}">{$vo.name}</option>
+                                </volist>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <div class="input-group">
+                                <span class="input-group-addon">变动类型</span>
+                                <select name="action" id="action" class="form-control">
+                                    <option value="jia">增加</option>
+                                    <option value="jian">减少</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <div class="input-group">
+                                <span class="input-group-addon">变动会员</span>
+                                <input type="text" id="username" maxlength="25" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <div class="input-group">
+                                <span class="input-group-addon">变动金额</span>
+                                <input type="text" id="amount" maxlength="10" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <div class="input-group">
+                                <span class="input-group-addon">操作备注</span>
+                                <textarea name="note" id="note" class="form-control"></textarea>
+                                <span class="input-group-addon">好记性不如烂笔头</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <button type="button" class="btn btn-primary" onclick="check();">确认操作</button>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {%include 'admin/jsbase.html'%}
+    <script type="text/javascript">
+    check=function(){
+        var d = {
+            "btype":$("#btype").val(),
+            "action":$("#action").val(),
+            "username":$("#username").val(),
+            "amount":$("#amount").val(),
+            "note":$("#note").val()
+        };
+        if(d.username == ""){
+            layer.msg('请输入变动会员');
+            return false;
+        }
+        if(d.amount == ""){
+            layer.msg('请输入变动金额');
+            return false;
+        }
+        sc.ajaxreturn('',d);
+    }
+    </script>
+</body>
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>后台管理</title>
+    {%include 'admin/csbase.html'%}
+    <style>
+    .w1{ width:80px; display: inline-block;}
+    .w3{ width:160px; display: inline-block;}
+    .w2{ width:300px; display: inline-block;}
+    </style>
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="ibox">
+            <div class="ibox-content">
+                <form class="form-horizontal">
+                    
+                    <div class="form-group">
+                        <label class="col-sm-12">矿机设置</label>
+                        <div class="col-sm-12">
+                            {%for i in product %}
+                            <div class="input-group">
+                                <span class="input-group-addon">矿机名称</span>
+                                <input type="text" id="minername1" value="{{i.name}}" class="form-control" />
+                                <span class="input-group-addon text-danger">售价</span>
+                                <input type="text" id="minerprice1" value="{{i.price}}" class="form-control" />
+                                <span class="input-group-addon">每天产</span>
+                                <input type="text" id="minerout1" value="{{i.earnings}}" class="form-control" />
+                                <span class="input-group-addon">枚，周期</span>
+                                <input type="text" id="minerhour1" value="{{i.cycle}}" class="form-control" />
+                                <span class="input-group-addon">天</span>
+                                <select id="minerswitch1" class="form-control" style="min-width:80px;">
+                                    <option value="0" {%if i.enable%} selected="selected" {%endif%}>开启</option>
+                                    <option value="1">关闭</option>
+                                </select>
+                            </div>
+                            {%endfor%}
+
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 m-t">
+                            <div class="input-group">
+                                <span class="input-group-addon">矿机最大购买数量</span>
+                                <input type="text" id="minerbuymax" value="{{max}}" class="form-control" />
+                                <span class="input-group-addon">台</span>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 m-t">
+                            <div class="input-group">
+                                <span class="input-group-addon">注册赠送</span>
+                                <select name="signgive" id="signgive" class="form-control">
+                                    <option value="{{p.id}}" selected="selected">{{p.name}}</option>
+                                    {%for i in product%}
+                                    <option value="{{i.id}}" >{{i.name}}</option>
+                                    {%endfor%}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <!-- <div class="form-group">
+                        <label class="col-sm-12">动态设置</label>
+                        <div class="col-sm-12">
+                            <div class="input-group">
+                                <span class="input-group-addon">静态收益</span>
+                                <input type="text" id="jdbonus" value="{$info.jdbonus}" class="form-control" />
+                                <span class="input-group-addon text-danger">%，多个请用“|”隔开</span>
+                            </div>
+                        </div>
+                    </div> -->
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
+                        <div class="col-sm-8">
+                            <input type="button" value="保存修改" class="btn btn-primary" onclick="check();" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    {%include 'admin/jsbase.html'%}
+    <script src="/static/res/js/icheck.min.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function(){
+        $(".i-checks").iCheck({checkboxClass:"icheckbox_square-green",radioClass:"iradio_square-green",});
+    });
+    check = function(){
+        d = {
+            "minername1": $("#minername1").val(),
+            "minername2": $("#minername2").val(),
+            "minername3": $("#minername3").val(),
+            "minername4": $("#minername4").val(),
+            "minername5": $("#minername5").val(),
+            
+            "minerprice1": $("#minerprice1").val(),
+            "minerprice2": $("#minerprice2").val(),
+            "minerprice3": $("#minerprice3").val(),
+            "minerprice4": $("#minerprice4").val(),
+            "minerprice5": $("#minerprice5").val(),
+            
+            "minerout1": $("#minerout1").val(),
+            "minerout2": $("#minerout2").val(),
+            "minerout3": $("#minerout3").val(),
+            "minerout4": $("#minerout4").val(),
+            "minerout5": $("#minerout5").val(),
+            
+            "minerhour1": $("#minerhour1").val(),
+            "minerhour2": $("#minerhour2").val(),
+            "minerhour3": $("#minerhour3").val(),
+            "minerhour4": $("#minerhour4").val(),
+            "minerhour5": $("#minerhour5").val(),
+            
+            "minerswitch1": $("#minerswitch1").val(),
+            "minerswitch2": $("#minerswitch2").val(),
+            "minerswitch3": $("#minerswitch3").val(),
+            "minerswitch4": $("#minerswitch4").val(),
+            "minerswitch5": $("#minerswitch5").val(),
+            
+            "minerbuymax": $("#minerbuymax").val(),
+            "signgive": $("#signgive").val(),
+            
+            "jdbonus": $("#jdbonus").val(),
+            
+        };
+        sc.ajaxreturn('',d);
+    }
+    </script>
+</body>
+</html>

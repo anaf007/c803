@@ -1,0 +1,6 @@
+{
+  "tests/test_forms.py::TestRegisterForm::()::test_validate_email_already_registered": true,
+  "tests/test_functional.py::TestRegistering::()::test_can_register": true,
+  "tests/test_functional.py::TestRegistering::()::test_sees_error_message_if_passwords_dont_match": true,
+  "tests/test_functional.py::TestRegistering::()::test_sees_error_message_if_user_already_registered": true
+}

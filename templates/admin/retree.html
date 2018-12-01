@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>后台管理</title>
+    {%include 'admin/csbase.html'%}
+    <link rel="stylesheet" href="/static/res/css/zTreeStyle.css" />
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="ibox">
+            <div class="ibox-content">
+                <div class="alert alert-success alert-dismissable">
+                    <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                    操作提示：双击或点击+符号，展开下线；展开数据采用Ajax异步获取数据，加快页面打开速度
+                </div>
+                <form id="search" method="post" class="form-inline" onsubmit="return getdata('s');">
+                    <div class="form-group">
+                        <input type="text" name="username" id="username" class="form-control" placeholder="会员账号" />
+                    </div>
+                    <button type="submit" class="btn btn-white" title="搜索">
+                        <i class="fa fa-search"></i> 搜索
+                    </button>
+                    <button type="button" class="btn btn-white" title="刷新" onclick="window.location.reload();">
+                        <i class="fa fa-repeat"></i> 刷新
+                    </button>
+                </form>
+                <div class="m-t-sm">
+                    <span class="text-danger">说明：会员帐号[姓名][级别][直推人数][团队人数]</span>
+                </div>
+                <div class="m-t-sm">
+                    <ul id="retree" class="ztree"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {%include 'admin/jsbase.html'%}
+    <js href="/static/res/js/jquery.ztree.core-3.5.js" />
+    <script type="text/javascript">
+    var setting = {
+        async:{
+            enable: true,
+            url:"{:U('User/maketree')}",
+            autoParam:["id"],
+        }
+    };
+        
+    $(document).ready(function(){
+        getdata('');
+    });
+
+    getdata = function(stype){
+        if(stype == 's'){
+            username = $("#username").val();
+            if(username == ''){
+                layer.alert('查看会员账号不能为空');
+                return false;
+            }else{
+                setting.async.url = "{:U('User/maketree')}" + '?username='+ username;
+            }
+        }
+        $.fn.zTree.init($("#retree"), setting);
+        setting.async.url = "{:U('User/maketree')}";
+        return false;
+    }
+    </script>

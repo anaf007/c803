@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>后台管理</title>
+    {%include 'admin/csbase.html'%}
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="ibox">
+            <div class="ibox-content">
+            <form class="form-horizontal" autocomplete="off">
+                <div class="form-group">
+                    <div class="col-sm-10 col-xs-12 pull-right">
+                        <div class="alert alert-success alert-dismissible fade in" role="alert">
+                            温馨提示：<br />
+                            1、登录密码默认为：123456，登录后请尽快修改密码；<br />
+                            2、交易密码默认为：123456，登录后请尽快修改密码；<br />
+                            <!-- 3、最低投资金额：{$cf['cbl1']}RMB -->
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group hide">
+                    <label class="col-sm-2 control-label">会员帐号</label>
+                    <div class="col-sm-10">
+                        <input type="text" id="username" class="form-control" value="{$info.username}" placeholder="6-18个字符,可用字母、数字,以字母开头" onblur="checkname();" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">联系电话</label>
+                    <div class="col-sm-10">
+                        <input type="text" id="mobile" value="" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">会员姓名</label>
+                    <div class="col-sm-10">
+                        <input type="text" id="truename" value="" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">推荐人</label>
+                    <div class="col-sm-10">
+                        <input type="text" id="rename" value="" class="form-control" onblur="checkrename();" />
+                    </div>
+                </div>
+                <!-- <div class="form-group">
+                    <label class="col-sm-2 control-label">接点人</label>
+                    <div class="col-sm-10">
+                        <input type="text" id="fathername" value="{$info.fathername}" class="form-control" onblur="checkfathername();" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">接点位置</label>
+                    <div class="col-sm-10">
+                        <select id="area" class="form-control">
+                            <option value="">请选择</option>
+                            <option value="0" <eq name="info['area']" value="0">selected</eq>>左</option>
+                            <option value="1" <eq name="info['area']" value="1">selected</eq>>右</option>
+                        </select>
+                    </div>
+                </div> -->
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">购币枚数</label>
+                    <div class="col-sm-10">
+                        <input type="text" id="signmoney" value="" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-10 pull-right">
+                        <button type="button" class="btn btn-primary" onclick="check();">确认注册</button>
+                    </div>
+                </div>
+            </form>
+            </div>
+        </div>
+    </div>
+     {%include 'admin/jsbase.html'%}
+    <script type="text/javascript">
+    check=function(){
+        var d = {
+        //  "username":$("#username").val(),
+            "rename":$("#rename").val(),
+        //  "fathername":$("#fathername").val(),
+        //  "area":$("#area").val(),
+            "truename":$("#truename").val(),
+            "mobile":$("#mobile").val(),
+            "signmoney":$("#signmoney").val(),
+        };
+        /*if(d.username == ""){
+            layer.msg('会员账号不能为空');
+            return false;
+        }*/
+        if(d.rename == ""){
+            layer.msg('推荐人不能为空');
+            return false;
+        }
+        /*if(d.fathername == ""){
+            layer.msg('接点人编号不能为空');
+            return false;
+        }*/
+        if(d.mobile == ""){
+            layer.msg('电话号码不能为空');
+            return false;
+        }
+        if(d.signmoney == ""){
+            layer.msg('投资金额不能为空');
+            return false;
+        }
+        sc.ajaxreturn('',d);
+    };
+    checkname = function(){
+        var d = {
+            "username":$("#username").val()
+        };
+        $.post("{:U('Public/checkusername')}",d,function(re){
+            layer.msg(re.msg);
+        });
+    };
+    checkrename = function(){
+        var d = {
+            "rename":$("#rename").val()
+        };
+        $.post("{:U('Public/checkrename')}",d,function(re){
+            if(re.code == 0){
+                layer.msg(re.msg);
+            }else{
+                $("#renametips").html(re.msg);
+            }
+        });
+    };
+    checkfathername = function(){
+        var d = {
+            "fathername":$("#fathername").val()
+        };
+        $.post("{:U('Public/checkfathername')}",d,function(re){
+            layer.msg(re.msg);
+        });
+    };
+    </script>
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>后台管理</title>
+    {%include 'admin/csbase.html'%}
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="ibox">
+            <div class="ibox-content">
+                <form id="search" method="get" class="form-inline">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="btn-group pull-right">
+                            <button type="submit" class="btn btn-white">
+                                <i class="fa fa-search"></i> 查询
+                            </button>
+                            <button type="button" class="btn btn-white" onclick="window.location.reload();">
+                                <i class="fa fa-repeat"></i> 刷新
+                            </button>
+                        </div>
+                        <div class="pull-right">
+                            <select name="stype" id="stype" class="form-control">
+                                <option value="username" >账号</option>
+                                <option value="truename" >姓名</option>
+                                <option value="mobile" >电话号码</option>
+                                <option value="rename">推荐人</option>
+                            </select>
+                            <input type="text" name="stext" id="stext" value="" class="form-control" />
+                            &nbsp;
+                        </div>
+                    </div>
+                </div>
+                </form>
+                <div class="table-responsive m-t-sm">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>账号</th>
+                            <th>姓名</th>
+                            <th>电话号码</th>
+                            <th>投资金额</th>
+                            <th>推荐人</th>
+                            <th>注册时间</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {%if not userall%}
+                        <tr>
+                            <td colspan="10" style="text-align:center">暂无数据！</td>
+                        </tr>
+                        {%endif%}
+                        {%for i in userall %}
+                        <tr>
+                            <td>{{i.id}}</td>
+                            <td>{{i.username}}</td>
+                            <td>{{i.first_name}}</td>
+                            <td>{{i.phone}}</td>
+                            <td>{{i.regmoney}}</td>
+                            <td>{{i.reid}}</td>
+                            <td>{{i.created_at}}</td>                            
+                            <td>
+                                <a link="" data-name="#" class="btn btn-xs btn-success active">激活</a>
+                                <a link="" data-name="#" class="btn btn-xs btn-danger del">删除</a>
+                                <a href="" target="_blank" class="btn btn-xs btn-primary"><i class="fa fa-sign-in"></i> 登录</a>
+                            </td>
+                        </tr>
+                        {%endfor%}
+                       
+                    </tbody>
+                </table>
+                </div>
+                <div id="page"></div>
+            </div>
+        </div>
+    </div>
+    
+    {%include 'admin/jsbase.html'%}
+    <script type="text/javascript">
+    $(document).ready(function() {
+        $("#page").pager({
+            pagenumber: {$p},
+            pagecount: {$pagesize},
+            buttonClickCallback: PageClick
+        });
+
+        $("body").on('click','.active',function(){
+            url = $(this).attr("link");
+            layer.confirm('你确定要激活会员【'+ $(this).attr('data-name') +'】操作吗？',{title:'操作提示'}, function(index){
+                sc.ajaxreturn(url,{});
+            });
+        });
+
+        $("body").on('click','.del',function(){
+            var url = $(this).attr('link');
+            layer.confirm('你确定要删除会员【'+ $(this).attr('data-name') +'】操作吗？',{title:'操作提示'}, function(index){
+                sc.ajaxreturn(url,{});
+            });
+        });
+    });
+
+    PageClick = function(p) {
+        sc.pageurl('','p',p);
+    };
+    </script>
+</body>
+</html>

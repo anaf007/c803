@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>后台管理</title>
+    {%include 'admin/csbase.html'%}
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="ibox">
+            <div class="ibox-content">
+                <form id="search" method="get" class="form-inline">
+                    <div class="row m-t">
+                        <div class="col-sm-12">
+                            <div class="btn-group pull-right">
+                                <button type="submit" class="btn btn-white" title="搜索">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                                <button type="button" class="btn btn-white" title="刷新" onclick="window.location.reload();">
+                                    <i class="fa fa-repeat"></i>
+                                </button>
+                            </div>
+                            <div class="pull-right">
+                                <input type="text" name="username" id="username" value="{$_GET['username']}" class="form-control" placeholder="会员帐号" />
+                                <select name="type" class="form-control">
+                                    <option value="">请选择类型</option>
+                                    <volist name="ztype" id="vo">
+                                    <option value="{$key}" <if condition="$key eq $_GET['type']">selected</if>>{$vo}</option>
+                                    </volist>
+                                </select>
+                                <input type="text" name="addtime" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" value="{$_GET['addtime']}"  class="form-control" placeholder="时间" readonly />
+                                &nbsp;
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="table-responsive m-t-sm">
+                    <table class="{$Think.config.TABLE_CLASS}">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>会员帐号</th>
+                                <th>类型</th>
+                                <th>地址</th>
+                                <th>数量</th>
+                                <th>时间</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <empty name="list">
+                            <tr>
+                                <td colspan="9" style="text-align:center">暂无数据！</td>
+                            </tr>
+                            <else />
+                            <volist name="list" id="vo">
+                            <tr>
+                                <td>{$vo.id}</td>
+                                <td>{$vo.uid|getuser="username"}</td>
+                                <td>{$vo['typetext']}</td>
+                                <td>{$vo.referer}</td>
+                                <td>{$vo.amount}</td>
+                                <td>{$vo.intime|date="Y-m-d H:i:s",###}</td>
+                            </tr>
+                            </volist>
+                            </empty>
+                        </tbody>
+                    </table>
+                    <div id="page"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    {%include 'admin/jsbase.html'%}
+    <script type="text/javascript">
+    $(document).ready(function() {
+        $("#page").pager({
+            pagenumber: {$p},
+            pagecount: {$pagesize},
+            buttonClickCallback: PageClick
+        });
+    });
+
+    PageClick = function(p) {
+        sc.pageurl('','p',p);
+    }
+    </script>
+</body>
+</html>

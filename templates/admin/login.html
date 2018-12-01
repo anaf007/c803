@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>{$cf.sitetitle}-后台登录</title>
+    <link href="/static/res/css/login.css" rel="stylesheet" type="text/css" />
+    <link href="/static/res/css/animate.min.css" rel="stylesheet" type="text/css">
+    <script>if(window.top !== window.self){ window.top.location = window.location;}</script>
+</head>
+
+<body>
+<div id="wrapper" class="login-register">
+    <div class="login-box">
+        <div class="back-box">
+            <div class="logo"><img src="/static/res/images/logo.png" /></div>
+            <form autocomplete="off">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+            <ul>
+                <li>
+                    <input type="text" id="username" placeholder="管理帐号" class="form-control" />
+                </li>
+                <li>
+                    <input type="password" id="password" placeholder="登录密码" class="form-control" />
+                </li>
+               <!--  <li>
+                    <input name="verify" type="text" id="verify" placeholder="验证码" class="form-control" style="width:60%;float:left;" />
+                    <img src="{:U('Public/verify')}" id="yzm" onclick="refreshImage();" style="width:30%;height:38px;float:right" />
+                </li> -->
+                <li><button class="btn btn-blue" type="button" onclick="docheck();">登录</button></li>
+            </ul>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script type="text/javascript" src="/static/res/js/layer/layer.js"></script>
+<script type="application/x-javascript">
+docheck = function(){
+    var d = {
+        'username' : $("#username").val(),
+        'password' : $("#password").val(),
+        'csrftoken' : "{{ csrf_token() }}",
+        // 'vifycode' : $("#verify").val()
+    };
+    if(d.username.length == 0){
+        layer.alert('请输入管理账号',{icon: 2,anim: 6});
+        return false;
+    }
+    if(d.password.length == 0){
+        layer.alert('请输入登录密码',{icon: 2,anim: 6});
+        return false;
+    }
+    // if(d.password.verify == 0){
+    //     layer.alert('请输入验证码',{icon: 2,anim: 6});
+    //     return false;
+    // }
+    layer.load(0,{shade: [0.2,'#000']});
+    $.post("{{url_for('admin.login')}}", d, function(re){
+        layer.closeAll();
+        if(re.code == 1){
+            layer.alert(re.msg, function(){
+                window.location = re.url;
+            });
+        }else{
+            layer.alert(re.msg, function(){
+                // refreshImage();
+                layer.closeAll();
+            });
+        }
+    });
+}
+
+refreshImage = function(){
+    var imageurl=  $("#yzm").attr("src");
+    $("#yzm")[0].src = imageurl + '?' + Math.random();
+}
+</script>
+</body>
+</html>

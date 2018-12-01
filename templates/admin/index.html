@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>-后台管理</title>
+    <link rel="stylesheet" type="text/css" href="/static/res/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/res/css/admin.css">
+</head>
+
+<body>
+<div class="page_container">
+    <div class="leftBox">
+        <ul class="photo_box">
+            <li>
+                <span class="user_photo"><img alt="" src="/static/res/images/car.jpg"></span>
+                <div class="user_detail">
+                   {{current_user.username}}
+                </div>
+            </li>
+        </ul><!-- end photo_box -->
+        <ul class="nav">
+            <li class="active">
+                <a href="{{url_for('admin.home')}}" target="iframe">
+                    <i class="fa fa-home"></i>
+                    <span class="title">管理首页</span>
+                </a>
+            </li>
+            <li>
+                <a>
+                    <i class="fa fa-users"></i> 
+                    <span class="title">会员管理</span>
+                    <span class="arrow right"></span>
+                </a>
+                <ul class="submenu">
+                    <li><a href="{{url_for('admin.user_add')}}" target="iframe"><i class="fa fa-angle-right"></i>注册会员</a></li>
+                    <li><a href="{{url_for('admin.user_index')}}" target="iframe"><i class="fa fa-angle-right"></i>未激活会员</a></li>
+                    <li><a href="{{url_for('admin.user_list')}}" target="iframe"><i class="fa fa-angle-right"></i>正式会员</a></li>
+                    <li><a href="{{url_for('admin.retree')}}" target="iframe"><i class="fa fa-angle-right"></i>推荐图谱</a></li>
+                    <!-- <li><a href="{:U('User/tree')}" target="iframe"><i class="fa fa-angle-right"></i>团队结构</a></li> -->
+                </ul>
+            </li>
+            <li>
+                <a>
+                    <i class="fa fa-credit-card"></i>
+                    <span class="title">财务管理</span>
+                    <span class="arrow right"></span>
+                </a>
+                <ul class="submenu">
+                    <li><a href="{{url_for('admin.cash_monenychange')}}" target="iframe"><i class="fa fa-angle-right"></i>货币增减</a></li>
+                    <li><a href="{{url_for('admin.cash_list')}}" target="iframe"><i class="fa fa-angle-right"></i>货币明细</a></li>
+                    <!-- <li><a href="{:U('Cash/exchange')}" target="iframe"><i class="fa fa-angle-right"></i>转换明细</a></li> -->
+                    <li><a href="{{url_for('admin.cash_transfer')}}" target="iframe"><i class="fa fa-angle-right"></i>转账记录</a></li>
+                    <!-- <li><a href="{:U('Cash/sllist')}" target="iframe"><i class="fa fa-angle-right"></i>算力明细</a></li> -->
+                    <li><a href="{{url_for('admin.withcashlist')}}" target="iframe"><i class="fa fa-angle-right"></i>提现记录</a></li>
+                    <li><a href="{{url_for('admin.miner_list')}}" target="iframe"><i class="fa fa-angle-right"></i>矿机记录</a></li>
+                </ul>
+            </li>
+            <li>
+                <a>
+                    <i class="fa fa-gears"></i> 
+                    <span class="title">系统设置</span>
+                    <span class="arrow right"></span>
+                </a>
+                <ul class="submenu">
+                    <li><a href="{{url_for('admin.system_config')}}" target="iframe"><i class="fa fa-angle-right"></i>系统设置</a></li>
+                    <li><a href="{{url_for('admin.bonus_config')}}" target="iframe"><i class="fa fa-angle-right"></i>参数设置</a></li>
+                    <!-- <li><a href="{{url_for('admin.user_add')}}" target="iframe"><i class="fa fa-angle-right"></i>短信设置</a></li> -->
+                    <!-- <li><a href="{{url_for('admin.user_add')}}" target="iframe"><i class="fa fa-angle-right"></i>新闻公告</a></li> -->
+                </ul>
+            </li>
+
+            <!-- 
+            <li>
+                <a>
+                    <i class="fa fa-database"></i>
+                    <span class="title">数据管理</span>
+                    <span class="arrow right"></span>
+                </a>
+                <ul class="submenu">
+                    <li>
+                        <a href="{{url_for('admin.user_add')}}" target="iframe"><i class="fa fa-angle-right"></i>清理缓存</a>
+                    </li>
+                    <li>
+                        <a href="{{url_for('admin.user_add')}}" target="iframe"><i class="fa fa-angle-right"></i>备份还原数据</a>
+                    </li>
+                    <li>
+                        <a href="{{url_for('admin.user_add')}}" target="iframe"><i class="fa fa-angle-right"></i>清空数据</a>
+                    </li>
+                </ul>
+            </li>
+            
+            <li>
+                <a>
+                    <i class="fa fa-desktop"></i>
+                    <span class="title">权限管理</span>
+                    <span class="right arrow"></span>
+                </a>
+                <ul class="submenu">
+                    <li>
+                        <a href="{:U('Admin/adminlist')}" target="iframe"><i class="fa fa-angle-right"></i>管理列表</a>
+                    </li>
+                    <li>
+                        <a href="{:U('Admin/auth_group')}" target="iframe"><i class="fa fa-angle-right"></i>角色列表</a>
+                    </li>
+                    <li>
+                        <a href="{:U('Admin/rulelist')}" target="iframe"><i class="fa fa-angle-right"></i>规则列表</a>
+                    </li>
+                    <li>
+                        <a href="{:U('Admin/ruleclass')}" target="iframe"><i class="fa fa-angle-right"></i>规则分类</a>
+                    </li>
+                </ul>
+            </li>
+ -->
+            <li>
+                <a href="{{url_for('admin.logout')}}" target="iframe">
+                    <i class="fa fa-sign-out"></i>
+                    <span class="title">安全退出</span>
+                </a>
+            </li>
+            
+        </ul><!-- end nav -->
+    </div><!-- end leftBox -->
+    
+    <div class="rightBox">
+        <div class="navbar_header">
+            <div class="navbar_right">
+                <ul class="bar_left">
+                    <li>
+                        <a class="sidebar_icon" style="cursor: pointer;"> <i class="fa fa-bars"></i> </a>
+                    </li>
+                </ul>
+                <ul class="bar_right">
+                    <li>
+                        <a><i class="fa fa-calendar"></i> 今天 2018-04-20</a>
+                    </li>
+                    <li>
+                        <a onclick="javascript:toggle_fullscreen()" style="cursor: pointer;"><i class="fa fa-expand"></i> 全屏</a>
+                    </li>
+                    <li>
+                        <a href="{{url_for('admin.logout')}}" target="iframe"><i class="fa fa-sign-out"></i> 安全退出</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="iframeBox">
+            <iframe id="iframe" name="iframe" width="100%" height="100%" src="{{url_for('admin.home')}}" frameborder="0"></iframe>
+        </div>
+    </div>
+</div>
+
+    <script type="text/javascript" src="/static/res/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/res/js/admin.js"></script>
+    <script type="text/javascript" src="/static/res/js/layer/layer.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function(){
+        $("a").click(function(){
+            if(this.href != '' && this.href != '#'){
+                layer.load(0,{shade: [0.2,'#000']});
+                $('#iframe').attr('src',this.href);
+            }
+        });
+        
+        $('#iframe').load(function(){
+            layer.closeAll();
+        });
+    });
+    </script>
+</body>
+</html>
