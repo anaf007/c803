@@ -3,7 +3,7 @@
 from flask import Flask, render_template
 
 from main import commands, public, user, admin
-from main.extensions import bcrypt, cache, csrf_protect, db, debug_toolbar, login_manager, migrate
+from main.extensions import bcrypt, cache, csrf_protect, db, debug_toolbar, login_manager, migrate, api
 
 
 def create_app(config_object='main.settings'):
@@ -30,6 +30,15 @@ def register_extensions(app):
     login_manager.init_app(app)
     debug_toolbar.init_app(app)
     migrate.init_app(app, db)
+
+    #添加rest_ful_api
+    try:
+        from main import api as v_api
+    except Exception as e:
+        return {'success':False,'message':'api接口操作失败。'},401
+    
+    api.init_app(app)
+
     return None
 
 

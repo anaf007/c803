@@ -23,6 +23,18 @@ class Product(SurrogatePK, Model):
     enable = Column(db.Boolean,default=True)
     product_sum = Column(db.Integer(),default=0)
 
+
+    def to_json(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'price': self.price,
+            'earnings': self.earnings,
+            'cycle': self.cycle,
+            'enable' : self.enable,
+            'product_sum' : self.product_sum
+        }
+
     
 
 

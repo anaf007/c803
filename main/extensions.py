@@ -8,6 +8,8 @@ from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf.csrf import CSRFProtect
 from flask_login_multi.login_manager import LoginManager  
+from flask_restful import Api
+
 
 bcrypt = Bcrypt()
 csrf_protect = CSRFProtect()
@@ -16,7 +18,9 @@ db = SQLAlchemy()
 migrate = Migrate()
 cache = Cache()
 debug_toolbar = DebugToolbarExtension()
-login_manager = LoginManager()  
+login_manager = LoginManager() 
+
+
 
 login_manager.blueprint_login_views = { 
     'user':  "public.login", 
@@ -24,4 +28,6 @@ login_manager.blueprint_login_views = {
 } 
 
 login_manager.login_message = "请登录."
+
+api = Api(decorators=[csrf_protect.exempt])
 
