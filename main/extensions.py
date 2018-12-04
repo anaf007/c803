@@ -23,8 +23,8 @@ login_manager = LoginManager()
 
 
 login_manager.blueprint_login_views = { 
-    'user':  "public.login", 
-    'admin': "admin.login", 
+    'user':  "http://oa.com/login/index?value=f", 
+    'admin': "http://oa.com/login/index?value=f", 
 } 
 
 login_manager.login_message = "请登录."

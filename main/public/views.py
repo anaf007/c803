@@ -11,6 +11,8 @@ from main.utils import flash_errors
 from main.helpers import templated
 from .routes import reg_url
 
+from main.models import SmUser
+
 bp = Blueprint('public', __name__, static_folder='../static')
 reg_url(bp)
 
@@ -21,7 +23,8 @@ def load_user(user_id,endpoint='user'):
     if request.blueprint == 'admin':
         return Admin.query.get(int(user_id))
     else:
-        return User.get_by_id(int(user_id))
+        # return User.get_by_id(int(user_id))
+        return SmUser.query.get(int(user_id))
 
 
 @login_required
@@ -63,16 +66,24 @@ def about():
 @templated()
 def login():
     """login."""
-    form = LoginForm(request.form)
-    if request.method == 'POST':
-        if form.validate_on_submit():
-            login_user(form.user)
-            flash('登录成功.', 'success')
-            redirect_url = request.args.get('next') or url_for('user.index')
-            return redirect(redirect_url)
-        else:
-            # form.verification_code.data = ''
-            flash_errors(form)
+    try:
+        form = LoginForm(request.form)
+        print('login')
+        if request.method == 'POST':
+            if form.validate_on_submit():
+                login_user(form.user)
+                flash('登录成功.', 'success')
+                redirect_url = request.args.get('next') or url_for('user.index')
+                return redirect(redirect_url)
+            else:
+                # form.verification_code.data = ''
+                # flash_errors(form)
+                return 'error'
+
+
+    except Exception as e:
+        print(str(e))
+    
 
     return dict(form=form)
 
